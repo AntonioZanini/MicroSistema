@@ -13,9 +13,11 @@ namespace MicroSistema
 {
     public partial class frmLogin : Form
     {
+        private ContaUsuario usuarioLogin;
         public frmLogin()
         {
             InitializeComponent();
+            usuarioLogin = new ContaUsuario();
         }
 
         private void pnlTextoUsuario_Paint(object sender, PaintEventArgs e)
@@ -50,7 +52,7 @@ namespace MicroSistema
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Test");
+            
         }
     }
 }
