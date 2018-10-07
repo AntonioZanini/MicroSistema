@@ -17,7 +17,9 @@ namespace MicroSistema
         public frmLogin()
         {
             InitializeComponent();
+            
             usuarioLogin = new ContaUsuario();
+            
         }
 
         private void pnlTextoUsuario_Paint(object sender, PaintEventArgs e)
@@ -52,7 +54,36 @@ namespace MicroSistema
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            
+            MessageBox.Show("Entrar");
+        }
+
+        private void btnAjuda_Click(object sender, EventArgs e)
+        {
+            frmSuporteLogin suporteLogin = new frmSuporteLogin(this.Left + btnAjuda.Left, this.Top + btnAjuda.Top);
+            suporteLogin.Show();
+        }
+
+        private void btnSair_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+    }
+
+    public class RoundButton : Button
+    {
+        public RoundButton(): base()
+        {
+            this.FlatStyle = FlatStyle.Flat;
+            this.FlatAppearance.BorderSize = 0;
+           
+        }
+        protected override void OnPaint(System.Windows.Forms.PaintEventArgs e)
+        {
+            GraphicsPath grPath = new GraphicsPath();
+            grPath.AddEllipse(0, 0, ClientSize.Width, ClientSize.Height);
+            this.Region = new Region(grPath);
+            base.OnPaint(e);
+
         }
     }
 }

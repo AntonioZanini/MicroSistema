@@ -12,7 +12,8 @@ namespace MicroSistema
     {
         private string nome;
         private string senha;
-
+        private string conta;
+        private List<string> listaDominios = new List<string>();
 
         enum TiposLetras
         {
@@ -38,9 +39,35 @@ namespace MicroSistema
             }
         }
 
+        public string Conta
+        {
+            set
+            {
+                conta = value;
+            }
+            get
+            {
+                return conta;
+            }
+        }
+
         public ContaUsuario()
         {
+            listaDominios.Add("@empresa.com.br");
+            
+        }
 
+        private bool ValidarContaUsuario(string conta)
+        {
+            bool estadoRetorno = false;
+            foreach (string dominio in listaDominios)
+            {
+                if (conta.EndsWith(dominio)) {
+                    estadoRetorno = true;
+                    break;
+                }
+            }
+            return estadoRetorno;
         }
 
         private bool ValidarSenha(string senha)
@@ -90,5 +117,16 @@ namespace MicroSistema
             return senhaValida;
         }
 
+        public bool DefinirNovaContaUsuario(string conta)
+        {
+            bool contaValida;
+
+            contaValida = ValidarContaUsuario(senha);
+
+            if (contaValida)
+                Conta = conta;
+
+            return contaValida;
+        }
     }
 }
