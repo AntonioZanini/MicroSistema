@@ -63,7 +63,7 @@
             this.txtConta.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtConta.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtConta.Location = new System.Drawing.Point(109, 23);
-            this.txtConta.MaxLength = 25;
+            this.txtConta.MaxLength = 35;
             this.txtConta.Name = "txtConta";
             this.txtConta.Size = new System.Drawing.Size(229, 22);
             this.txtConta.TabIndex = 1;

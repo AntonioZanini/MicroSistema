@@ -17,9 +17,6 @@ namespace MicroSistema
         public frmLogin()
         {
             InitializeComponent();
-            
-            usuarioLogin = new ContaUsuario();
-            
         }
 
         private void pnlTextoUsuario_Paint(object sender, PaintEventArgs e)
@@ -54,7 +51,13 @@ namespace MicroSistema
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Entrar");
+            usuarioLogin = ContaUsuario.Login(txtConta.Text, txtSenha.Text);
+            if (usuarioLogin != null)
+            {
+                MessageBox.Show(String.Format("Entrou! Seja bem vindo, {0}.", usuarioLogin.Nome));
+            }
+            else
+                MessageBox.Show("Usuário ou senha inválidos!");
         }
 
         private void btnAjuda_Click(object sender, EventArgs e)
@@ -83,7 +86,6 @@ namespace MicroSistema
             grPath.AddEllipse(0, 0, ClientSize.Width, ClientSize.Height);
             this.Region = new Region(grPath);
             base.OnPaint(e);
-
         }
     }
 }

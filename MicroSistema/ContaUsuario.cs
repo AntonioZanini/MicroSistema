@@ -10,11 +10,6 @@ namespace MicroSistema
 
     class ContaUsuario
     {
-        private string nome;
-        private string senha;
-        private string conta;
-        private List<string> listaDominios = new List<string>();
-
         enum TiposLetras
         {
             Maiusculas,
@@ -23,38 +18,29 @@ namespace MicroSistema
             Simbolos
         }
 
-        public string Nome
-        {
-            get
-            {
-                return Nome;
-            }
-        }
+        private List<string> listaDominios = new List<string>();        
+        private string senha;
 
+        #region Propriedades
+        public string Nome { get; private set; }
+        public string Conta { get; private set; }
         public string Senha
         {
-            set
+            private set
             {
-                nome = CriptografarSenha(value);
+                senha = CriptografarSenha(value);
             }
-        }
 
-        public string Conta
-        {
-            set
-            {
-                conta = value;
-            }
             get
             {
-                return conta;
+                return senha;
             }
         }
+        #endregion
 
         public ContaUsuario()
         {
-            listaDominios.Add("@empresa.com.br");
-            
+            listaDominios.Add("@empresa.com.br");          
         }
 
         private bool ValidarContaUsuario(string conta)
@@ -89,7 +75,7 @@ namespace MicroSistema
             return estadoRetorno;
         }
 
-        private string CriptografarSenha(string senha)
+        private static string CriptografarSenha(string senha)
         {
             // Intanciar objeto MD5, converter senha para array de char, calcular o hash da senha.
             MD5 md5 = MD5.Create();
@@ -107,26 +93,41 @@ namespace MicroSistema
 
         public bool DefinirNovaSenha(string senha)
         {
-            bool senhaValida;
-
-            senhaValida = ValidarSenha(senha);
-
-            if (senhaValida)
+            if (ValidarSenha(senha))
+            {
                 Senha = senha;
-
-            return senhaValida;
+                return true;
+            }
+            return false;
         }
 
         public bool DefinirNovaContaUsuario(string conta)
         {
-            bool contaValida;
-
-            contaValida = ValidarContaUsuario(senha);
-
-            if (contaValida)
+            if (ValidarContaUsuario(conta))
+            {
                 Conta = conta;
+                return true;
+            }
+            return false;
+        }
 
-            return contaValida;
+        public static ContaUsuario Login(string conta, string senha)
+        {
+            string contaBD = "valdirsrios@empresa.com.br", // Valores de teste: valdirsrios@empresa.com.br e $3nh4I-II-III
+                   senhaBD = "10CA25278C7CD10AA375D98EFAD44FBA",
+                   nomeBD = "Valdir Silveira Rios" ; 
+            //Captura dos dados do BD
+            if (contaBD.Equals(conta, StringComparison.InvariantCultureIgnoreCase) && senhaBD.Equals(CriptografarSenha(senha)))
+            {
+                ContaUsuario contaUsuario = new ContaUsuario()
+                {
+                    Nome = nomeBD,
+                    Senha = senhaBD,
+                    Conta = contaBD
+                };
+                return contaUsuario;
+            }
+            return null;
         }
     }
 }
