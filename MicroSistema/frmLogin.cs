@@ -62,8 +62,12 @@ namespace MicroSistema
 
         private void btnAjuda_Click(object sender, EventArgs e)
         {
-            frmSuporteLogin suporteLogin = new frmSuporteLogin(this.Left + btnAjuda.Left, this.Top + btnAjuda.Top);
-            suporteLogin.Show();
+            Point l = new Point(this.Left + btnAjuda.Left, this.Top + btnAjuda.Top);
+            Size t = new Size(420, 130);
+            frmMensagemSuporte mensagemLogin = new frmMensagemSuporte(l, t, "Em caso de problemas, consulte o suporte:\n" + 
+                                                                            "- Elisa Monteiro, \nAdministradora do Sistema - Ramal 145\n" +
+                                                                            "- Ricardo Estefan Florença, \nSuporte Autorizado do Sistema - (11) 4891-7752");
+            mensagemLogin.Show();
         }
 
         private void btnSair_Click(object sender, EventArgs e)
