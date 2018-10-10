@@ -36,4 +36,13 @@ Ela realiza uma transição suave "_fade in_" e fade "_fade out_", desse modo n�
 - A tela possui a exibição de um ícone, provisoriamente um ícone de informação do sistema operacional;
 
 ![image](https://user-images.githubusercontent.com/9437498/46632485-2fbbdb80-cb21-11e8-8a3f-de52b777b7a1.png)
+
 A tela em tempo de execução recebendo uma mensagem da tela de login para informá-la ao usuário.
+
+## Banco de Dados
+### 4º Dia - 09/10/2018
+![image](https://user-images.githubusercontent.com/9437498/46707690-70931d80-cc11-11e8-9d24-1ab188362262.png)
+
+Banco de dados, criado no MS SQLServer, parcialmente construído, o seguinte segmento corresponde ao conjunto de itens necessários para as funcionalidades de login.
+
+Ainda faltam as tabelas principais do programa e possíveis rotinas e funções implementadas no banco de dados.
