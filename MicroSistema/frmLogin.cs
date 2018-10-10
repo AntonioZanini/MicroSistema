@@ -13,7 +13,6 @@ namespace MicroSistema
 {
     public partial class frmLogin : Form
     {
-        private ContaUsuario usuarioLogin;
         public frmLogin()
         {
             InitializeComponent();
@@ -51,13 +50,12 @@ namespace MicroSistema
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            usuarioLogin = ContaUsuario.Login(txtConta.Text, txtSenha.Text);
-            if (usuarioLogin != null)
-            {
-                MessageBox.Show(String.Format("Entrou! Seja bem vindo, {0}.", usuarioLogin.Nome));
-            }
-            else
+            
+            ContaUsuario.Login(txtConta.Text, txtSenha.Text);
+            if (ContaUsuario.UsuarioUtilizador == null)
                 MessageBox.Show("Usuário ou senha inválidos!");
+            else
+                MessageBox.Show(String.Format("Entrou! Seja bem vindo, {0}.", ContaUsuario.UsuarioUtilizador.Nome));
         }
 
         private void btnAjuda_Click(object sender, EventArgs e)
