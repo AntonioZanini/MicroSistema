@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MICROSISTEMAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AcessoFuncionalidade">
+          <Key>
+            <PropertyRef Name="CdNivelAcesso" />
+            <PropertyRef Name="CdFuncionalidade" />
+          </Key>
+          <Property Name="CdNivelAcesso" Type="int" Nullable="false" />
+          <Property Name="CdFuncionalidade" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Funcionalidade">
+          <Key>
+            <PropertyRef Name="CdFuncionalidade" />
+          </Key>
+          <Property Name="CdFuncionalidade" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="35" />
+        </EntityType>
+        <EntityType Name="NivelAcesso">
+          <Key>
+            <PropertyRef Name="CdNivelAcesso" />
+          </Key>
+          <Property Name="CdNivelAcesso" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Titulo" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="CdUsuario" />
+          </Key>
+          <Property Name="CdUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="Senha" Type="char" MaxLength="32" Nullable="false" />
+          <Property Name="DataCadastro" Type="date" Nullable="false" />
+          <Property Name="Ativo" Type="bit" Nullable="false" />
+          <Property Name="CdNivelAcesso" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AF_FN_CdFuncionalidade">
+          <End Role="Funcionalidade" Type="Self.Funcionalidade" Multiplicity="1" />
+          <End Role="AcessoFuncionalidade" Type="Self.AcessoFuncionalidade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Funcionalidade">
+              <PropertyRef Name="CdFuncionalidade" />
+            </Principal>
+            <Dependent Role="AcessoFuncionalidade">
+              <PropertyRef Name="CdFuncionalidade" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AF_NA_CdNivelAcesso">
+          <End Role="NivelAcesso" Type="Self.NivelAcesso" Multiplicity="1" />
+          <End Role="AcessoFuncionalidade" Type="Self.AcessoFuncionalidade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NivelAcesso">
+              <PropertyRef Name="CdNivelAcesso" />
+            </Principal>
+            <Dependent Role="AcessoFuncionalidade">
+              <PropertyRef Name="CdNivelAcesso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_US_NA_CdNivelAcesso">
+          <End Role="NivelAcesso" Type="Self.NivelAcesso" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NivelAcesso">
+              <PropertyRef Name="CdNivelAcesso" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="CdNivelAcesso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MICROSISTEMAModelStoreContainer">
+          <EntitySet Name="AcessoFuncionalidade" EntityType="Self.AcessoFuncionalidade" Schema="usuario" store:Type="Tables" />
+          <EntitySet Name="Funcionalidade" EntityType="Self.Funcionalidade" Schema="usuario" store:Type="Tables" />
+          <EntitySet Name="NivelAcesso" EntityType="Self.NivelAcesso" Schema="usuario" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="usuario" store:Type="Tables" />
+          <AssociationSet Name="FK_AF_FN_CdFuncionalidade" Association="Self.FK_AF_FN_CdFuncionalidade">
+            <End Role="Funcionalidade" EntitySet="Funcionalidade" />
+            <End Role="AcessoFuncionalidade" EntitySet="AcessoFuncionalidade" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AF_NA_CdNivelAcesso" Association="Self.FK_AF_NA_CdNivelAcesso">
+            <End Role="NivelAcesso" EntitySet="NivelAcesso" />
+            <End Role="AcessoFuncionalidade" EntitySet="AcessoFuncionalidade" />
+          </AssociationSet>
+          <AssociationSet Name="FK_US_NA_CdNivelAcesso" Association="Self.FK_US_NA_CdNivelAcesso">
+            <End Role="NivelAcesso" EntitySet="NivelAcesso" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MICROSISTEMAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Funcionalidade">
+          <Key>
+            <PropertyRef Name="CdFuncionalidade" />
+          </Key>
+          <Property Name="CdFuncionalidade" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descricao" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="NivelAcesso" Relationship="Self.AcessoFuncionalidade" FromRole="Funcionalidade" ToRole="NivelAcesso" />
+        </EntityType>
+        <EntityType Name="NivelAcesso">
+          <Key>
+            <PropertyRef Name="CdNivelAcesso" />
+          </Key>
+          <Property Name="CdNivelAcesso" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Titulo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_US_NA_CdNivelAcesso" FromRole="NivelAcesso" ToRole="Usuario" />
+          <NavigationProperty Name="Funcionalidade" Relationship="Self.AcessoFuncionalidade" FromRole="NivelAcesso" ToRole="Funcionalidade" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="CdUsuario" />
+          </Key>
+          <Property Name="CdUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nome" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Senha" Type="String" MaxLength="32" FixedLength="true" Unicode="false" Nullable="false" a:SetterAccess="Protected" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+          <Property Name="DataCadastro" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Ativo" Type="Boolean" Nullable="false" />
+          <Property Name="CdNivelAcesso" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="NivelAcesso" Relationship="Self.FK_US_NA_CdNivelAcesso" FromRole="Usuario" ToRole="NivelAcesso" />
+        </EntityType>
+        <Association Name="FK_US_NA_CdNivelAcesso">
+          <End Role="NivelAcesso" Type="Self.NivelAcesso" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NivelAcesso">
+              <PropertyRef Name="CdNivelAcesso" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="CdNivelAcesso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AcessoFuncionalidade">
+          <End Role="Funcionalidade" Type="Self.Funcionalidade" Multiplicity="*" />
+          <End Role="NivelAcesso" Type="Self.NivelAcesso" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="MicroSistemaContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Funcionalidade" EntityType="Self.Funcionalidade" />
+          <EntitySet Name="NivelAcesso" EntityType="Self.NivelAcesso" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+          <AssociationSet Name="FK_US_NA_CdNivelAcesso" Association="Self.FK_US_NA_CdNivelAcesso">
+            <End Role="NivelAcesso" EntitySet="NivelAcesso" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="AcessoFuncionalidade" Association="Self.AcessoFuncionalidade">
+            <End Role="Funcionalidade" EntitySet="Funcionalidade" />
+            <End Role="NivelAcesso" EntitySet="NivelAcesso" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MICROSISTEMAModelStoreContainer" CdmEntityContainer="MicroSistemaContext">
+          <EntitySetMapping Name="Funcionalidade">
+            <EntityTypeMapping TypeName="MICROSISTEMAModel.Funcionalidade">
+              <MappingFragment StoreEntitySet="Funcionalidade">
+                <ScalarProperty Name="CdFuncionalidade" ColumnName="CdFuncionalidade" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NivelAcesso">
+            <EntityTypeMapping TypeName="MICROSISTEMAModel.NivelAcesso">
+              <MappingFragment StoreEntitySet="NivelAcesso">
+                <ScalarProperty Name="CdNivelAcesso" ColumnName="CdNivelAcesso" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="MICROSISTEMAModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="CdUsuario" ColumnName="CdUsuario" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Senha" ColumnName="Senha" />
+                <ScalarProperty Name="DataCadastro" ColumnName="DataCadastro" />
+                <ScalarProperty Name="Ativo" ColumnName="Ativo" />
+                <ScalarProperty Name="CdNivelAcesso" ColumnName="CdNivelAcesso" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AcessoFuncionalidade" TypeName="MICROSISTEMAModel.AcessoFuncionalidade" StoreEntitySet="AcessoFuncionalidade">
+            <EndProperty Name="Funcionalidade">
+              <ScalarProperty Name="CdFuncionalidade" ColumnName="CdFuncionalidade" />
+            </EndProperty>
+            <EndProperty Name="NivelAcesso">
+              <ScalarProperty Name="CdNivelAcesso" ColumnName="CdNivelAcesso" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

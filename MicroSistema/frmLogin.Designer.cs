@@ -28,11 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.pcbxIlustraLogin = new System.Windows.Forms.PictureBox();
             this.txtConta = new System.Windows.Forms.TextBox();
             this.txtSenha = new System.Windows.Forms.TextBox();
-            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblSenha = new System.Windows.Forms.Label();
             this.lblUsuario = new System.Windows.Forms.Label();
@@ -42,7 +40,6 @@
             this.btnAjuda = new MicroSistema.RoundButton();
             this.btnSair = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pcbxIlustraLogin)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -185,7 +182,6 @@
             this.Name = "frmLogin";
             this.Text = "Entrada no Sistema";
             ((System.ComponentModel.ISupportInitialize)(this.pcbxIlustraLogin)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
@@ -197,7 +193,6 @@
         private System.Windows.Forms.PictureBox pcbxIlustraLogin;
         private System.Windows.Forms.TextBox txtConta;
         private System.Windows.Forms.TextBox txtSenha;
-        private System.Windows.Forms.BindingSource bindingSource1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel pnlTextoUsuario;
         private System.Windows.Forms.Panel pnlTextoSenha;

@@ -18,37 +18,17 @@ namespace MicroSistema
             Simbolos
         }
 
-        private List<string> listaDominios = new List<string>();        
-        private string senha;
+        private List<string> listaDominios = new List<string>() { "@empresa.com.br" };
 
-        #region Propriedades
-        public string Nome { get; private set; }
-        public string Conta { get; private set; }
-        public string Senha
-        {
-            private set
-            {
-                senha = CriptografarSenha(value);
-            }
-
-            get
-            {
-                return senha;
-            }
-        }
-        #endregion
-
-        public ContaUsuario()
-        {
-            listaDominios.Add("@empresa.com.br");          
-        }
+        public static Usuario UsuarioUtilizador { get; private set; }
 
         private bool ValidarContaUsuario(string conta)
         {
             bool estadoRetorno = false;
             foreach (string dominio in listaDominios)
             {
-                if (conta.EndsWith(dominio)) {
+                if (conta.EndsWith(dominio))
+                {
                     estadoRetorno = true;
                     break;
                 }
@@ -91,43 +71,46 @@ namespace MicroSistema
             return sb.ToString();
         }
 
-        public bool DefinirNovaSenha(string senha)
-        {
-            if (ValidarSenha(senha))
-            {
-                Senha = senha;
-                return true;
-            }
-            return false;
-        }
+
 
         public bool DefinirNovaContaUsuario(string conta)
         {
             if (ValidarContaUsuario(conta))
             {
-                Conta = conta;
+                UsuarioUtilizador.Email = conta;
                 return true;
             }
             return false;
         }
 
-        public static ContaUsuario Login(string conta, string senha)
+        public static void Login(string conta, string senha)
         {
-            string contaBD = "valdirsrios@empresa.com.br", // Valores de teste: valdirsrios@empresa.com.br e $3nh4I-II-III
-                   senhaBD = "10CA25278C7CD10AA375D98EFAD44FBA",
-                   nomeBD = "Valdir Silveira Rios" ; 
-            //Captura dos dados do BD
-            if (contaBD.Equals(conta, StringComparison.InvariantCultureIgnoreCase) && senhaBD.Equals(CriptografarSenha(senha)))
-            {
-                ContaUsuario contaUsuario = new ContaUsuario()
-                {
-                    Nome = nomeBD,
-                    Senha = senhaBD,
-                    Conta = contaBD
-                };
-                return contaUsuario;
-            }
-            return null;
+            MicroSistemaContext context = new MicroSistemaContext();
+            // Valores de teste: valdirsrios@empresa.com.br e $3nh4I-II-III "10CA25278C7CD10AA375D98EFAD44FBA"
+
+            Usuario usuario = null;
+            senha = CriptografarSenha(senha);
+            usuario = context.Usuario.Where(x => x.Email.Equals(conta, StringComparison.InvariantCultureIgnoreCase) && x.Senha.Equals(senha)).FirstOrDefault();
+            UsuarioUtilizador = usuario;
+        }
+    }
+
+    public partial class Usuario
+    {
+        public Usuario()
+        {
+            DataCadastro = DateTime.Today;
+            Ativo = true;
+        }
+        public Usuario(string email, string nome, string senha, int cdNivelAcesso)
+        {
+            DataCadastro = DateTime.Today;
+            Ativo = true;
+
+            Email = email;
+            Nome = nome;
+            Senha = senha;
+            CdNivelAcesso = cdNivelAcesso;
         }
     }
 }
