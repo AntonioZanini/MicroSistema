@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace MicroSistema
 {
 
-    class ContaUsuario
+    public static class ContaUsuario
     {
         enum TiposLetras
         {
@@ -18,11 +18,11 @@ namespace MicroSistema
             Simbolos
         }
 
-        private List<string> listaDominios = new List<string>() { "@empresa.com.br" };
+        private static List<string> listaDominios = new List<string>() { "@empresa.com.br" };
 
         public static Usuario UsuarioUtilizador { get; private set; }
 
-        private bool ValidarContaUsuario(string conta)
+        private static bool ValidarContaUsuario(string conta)
         {
             bool estadoRetorno = false;
             foreach (string dominio in listaDominios)
@@ -36,7 +36,7 @@ namespace MicroSistema
             return estadoRetorno;
         }
 
-        private bool ValidarSenha(string senha)
+        private static bool ValidarSenha(string senha)
         {
             bool[] regrasAtivas = { true, true, true, true };
             int tamanhoMinimo = 6;
@@ -48,7 +48,7 @@ namespace MicroSistema
                 estadoRetorno = false;
             if (!senha.Any(char.IsDigit) && regrasAtivas[(int)TiposLetras.Numeros])
                 estadoRetorno = false;
-            if (!senha.Any(char.IsSymbol) && regrasAtivas[(int)TiposLetras.Simbolos])
+            if ((!senha.Any(char.IsSymbol) && !senha.Any(char.IsPunctuation)) && regrasAtivas[(int)TiposLetras.Simbolos])
                 estadoRetorno = false;
             if (senha.Length < tamanhoMinimo)
                 estadoRetorno = false;
@@ -71,16 +71,86 @@ namespace MicroSistema
             return sb.ToString();
         }
 
-
-
-        public bool DefinirNovaContaUsuario(string conta)
+        public static object ListarUsuarios(int cdNA = 0)
         {
-            if (ValidarContaUsuario(conta))
+
+            using (MicroSistemaContext context = new MicroSistemaContext())
             {
-                UsuarioUtilizador.Email = conta;
-                return true;
+                var lista = context.Usuario.Select(u => new { u.Nome, u.Email, NivelAcesso = u.NivelAcesso.Titulo, u.DataCadastro, u.CdUsuario });
+                if (cdNA != 0)
+                    lista = context.Usuario.Where(u => u.CdNivelAcesso == cdNA).Select(u => new { u.Nome, u.Email, NivelAcesso = u.NivelAcesso.Titulo, u.DataCadastro, u.CdUsuario });
+                return lista.ToList();
             }
-            return false;
+        }
+
+        public static object ListarNiveisAcesso(string cabecalho = "")
+        {
+            using (MicroSistemaContext context = new MicroSistemaContext())
+            {
+                var lista = context.NivelAcesso.Select(n => new { n.CdNivelAcesso, n.Titulo }).ToList();
+                if (cabecalho != "")
+                    lista.Add(new { CdNivelAcesso = 0, Titulo = cabecalho });
+                lista = lista.OrderBy(b => b.CdNivelAcesso).ToList();
+
+                return lista;
+            }
+        }
+
+        public static void AlterarUsuario(Usuario usuarioAlterar)
+        {
+            if (ValidarContaUsuario(usuarioAlterar.Email))
+            {
+                using (MicroSistemaContext context = new MicroSistemaContext())
+                {
+                    context.Entry(usuarioAlterar).State = System.Data.Entity.EntityState.Modified;
+                    context.SaveChanges();
+                }
+            }
+            else
+                throw new ContaInvalidaException("Email do usuário não satisfaz critérios de validação.");
+        }
+
+        public static void NovoUsuario(string email, string nome, string senha, int cdNivelAcesso)
+        {
+            string senhaCripto;
+            if (ValidarContaUsuario(email))
+            {
+                if (ValidarSenha(senha))
+                {
+                    senhaCripto = CriptografarSenha(senha);
+                    Usuario usuario = new Usuario(email, nome, senhaCripto, cdNivelAcesso);
+                    using (MicroSistemaContext context = new MicroSistemaContext())
+                    {
+                        context.Usuario.Add(usuario);
+                        context.SaveChanges();
+                    }
+                }
+                else
+                    throw new SenhaInvalidaException("Senha do usuário não satisfaz critérios de validação.");
+            }
+            else
+                throw new ContaInvalidaException("Email do usuário não satisfaz critérios de validação.");
+                
+        }
+
+        public static Usuario BuscarUsuario(int cdUsuario)
+        {
+            Usuario usuario;
+            using (MicroSistemaContext context = new MicroSistemaContext())
+            {
+                usuario = context.Usuario.Where(u => u.CdUsuario == cdUsuario).Single();
+            }
+            return usuario;
+        }
+
+        public static void Excluir(Usuario usuarioExcluir)
+        {
+            using (MicroSistemaContext context = new MicroSistemaContext())
+            {
+                Usuario usuario = context.Usuario.Where(u => u.CdUsuario == usuarioExcluir.CdUsuario).Single();
+                context.Usuario.Remove(usuario);
+                context.SaveChanges();
+            }
         }
 
         public static void Login(string conta, string senha)
@@ -90,9 +160,34 @@ namespace MicroSistema
 
             Usuario usuario = null;
             senha = CriptografarSenha(senha);
-            usuario = context.Usuario.Where(x => x.Email.Equals(conta, StringComparison.InvariantCultureIgnoreCase) && x.Senha.Equals(senha)).FirstOrDefault();
+            usuario = context.Usuario.Where(x => x.Email.Equals(conta, StringComparison.InvariantCultureIgnoreCase) && x.Senha.Equals(senha) && x.Ativo == true).FirstOrDefault();
             UsuarioUtilizador = usuario;
         }
+
+    }
+
+
+    [Serializable]
+    public class ContaInvalidaException : ArgumentException
+    {
+        public ContaInvalidaException() { }
+        public ContaInvalidaException(string message) : base(message) { }
+        public ContaInvalidaException(string message, Exception inner) : base(message, inner) { }
+        protected ContaInvalidaException(
+          System.Runtime.Serialization.SerializationInfo info,
+          System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+    }
+
+
+    [Serializable]
+    public class SenhaInvalidaException : ArgumentException
+    {
+        public SenhaInvalidaException() { }
+        public SenhaInvalidaException(string message) : base(message) { }
+        public SenhaInvalidaException(string message, Exception inner) : base(message, inner) { }
+        protected SenhaInvalidaException(
+          System.Runtime.Serialization.SerializationInfo info,
+          System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }
 
     public partial class Usuario
@@ -112,5 +207,6 @@ namespace MicroSistema
             Senha = senha;
             CdNivelAcesso = cdNivelAcesso;
         }
+
     }
 }
