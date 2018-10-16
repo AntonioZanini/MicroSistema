@@ -36,6 +36,7 @@
             this.lblFiltro = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblTitulo = new System.Windows.Forms.Label();
+            this.btnResetSenha = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsuarios)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -125,6 +126,17 @@
             this.lblTitulo.TabIndex = 0;
             this.lblTitulo.Text = "Gerenciamento de Contas de Usuários";
             // 
+            // btnResetSenha
+            // 
+            this.btnResetSenha.Location = new System.Drawing.Point(523, 182);
+            this.btnResetSenha.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnResetSenha.Name = "btnResetSenha";
+            this.btnResetSenha.Size = new System.Drawing.Size(123, 30);
+            this.btnResetSenha.TabIndex = 2;
+            this.btnResetSenha.Text = "Redefinir Senha";
+            this.btnResetSenha.UseVisualStyleBackColor = true;
+            this.btnResetSenha.Click += new System.EventHandler(this.btnResetSenha_Click);
+            // 
             // frmUsuarios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -133,6 +145,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.lblFiltro);
             this.Controls.Add(this.cmbxFiltroNivelAcesso);
+            this.Controls.Add(this.btnResetSenha);
             this.Controls.Add(this.btnExcluir);
             this.Controls.Add(this.btnAlterar);
             this.Controls.Add(this.btnAdicionar);
@@ -140,6 +153,7 @@
             this.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "frmUsuarios";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Gerenciamento de Contas de Usuários";
             this.Load += new System.EventHandler(this.frmUsuarios_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsuarios)).EndInit();
@@ -160,5 +174,6 @@
         private System.Windows.Forms.Label lblFiltro;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label lblTitulo;
+        private System.Windows.Forms.Button btnResetSenha;
     }
 }

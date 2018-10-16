@@ -103,5 +103,37 @@ namespace MicroSistema
                 childForm.Close();
             }
         }
+        // Logica Não Pré-Gerada:
+        private void frmMdiPrincipal_Load(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Maximized;
+            this.Visible = false;
+            frmLogin login = new frmLogin();
+            login.ShowDialog();
+            this.Visible = true;
+            if (ContaUsuario.SenhaTemporaria)
+            {
+                MessageBox.Show("Você entrou com uma senha temporária e será direcionado \npara alterá-la para uma senha de sua escolha.\n\n"+
+                                "Esta senha deve ter ao menos 6 caracteres e possuir \ncaracteres maiúsculos, minúsculos, números e símbolos.");
+                frmTrocaSenha trocaSenha = new frmTrocaSenha(ContaUsuario.UsuarioUtilizador, false, true);
+                trocaSenha.ShowDialog();
+            }
+
+        }
+
+        private void usuariosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (Form form in Application.OpenForms)
+            {
+                if (form is frmUsuarios)
+                {
+                    form.Focus();
+                    return;
+                }
+            }
+            frmUsuarios usuarios = new frmUsuarios();
+            usuarios.MdiParent = this;
+            usuarios.Show();
+        }
     }
 }

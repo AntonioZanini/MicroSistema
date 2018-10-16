@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pcbxIlustraLogin = new System.Windows.Forms.PictureBox();
             this.txtConta = new System.Windows.Forms.TextBox();
             this.txtSenha = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -37,22 +36,15 @@
             this.pnlTextoUsuario = new System.Windows.Forms.Panel();
             this.pnlTextoSenha = new System.Windows.Forms.Panel();
             this.btnLogin = new System.Windows.Forms.Button();
-            this.btnAjuda = new MicroSistema.RoundButton();
             this.btnSair = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.pcbxIlustraLogin)).BeginInit();
+            this.pnlTitulo = new System.Windows.Forms.Panel();
+            this.lblTitulo = new System.Windows.Forms.Label();
+            this.pcbxIlustraLogin = new System.Windows.Forms.PictureBox();
+            this.btnAjuda = new MicroSistema.RoundButton();
             this.panel1.SuspendLayout();
+            this.pnlTitulo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pcbxIlustraLogin)).BeginInit();
             this.SuspendLayout();
-            // 
-            // pcbxIlustraLogin
-            // 
-            this.pcbxIlustraLogin.BackgroundImage = global::MicroSistema.Properties.Resources.Assinatura;
-            this.pcbxIlustraLogin.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pcbxIlustraLogin.Dock = System.Windows.Forms.DockStyle.Left;
-            this.pcbxIlustraLogin.Location = new System.Drawing.Point(0, 0);
-            this.pcbxIlustraLogin.Name = "pcbxIlustraLogin";
-            this.pcbxIlustraLogin.Size = new System.Drawing.Size(204, 263);
-            this.pcbxIlustraLogin.TabIndex = 0;
-            this.pcbxIlustraLogin.TabStop = false;
             // 
             // txtConta
             // 
@@ -64,6 +56,7 @@
             this.txtConta.Name = "txtConta";
             this.txtConta.Size = new System.Drawing.Size(229, 22);
             this.txtConta.TabIndex = 1;
+            this.txtConta.Text = "arnaldolopez@empresa.com.br";
             // 
             // txtSenha
             // 
@@ -71,11 +64,12 @@
             this.txtSenha.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtSenha.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtSenha.Location = new System.Drawing.Point(109, 64);
-            this.txtSenha.MaxLength = 20;
+            this.txtSenha.MaxLength = 25;
             this.txtSenha.Name = "txtSenha";
             this.txtSenha.PasswordChar = '*';
             this.txtSenha.Size = new System.Drawing.Size(229, 22);
             this.txtSenha.TabIndex = 4;
+            this.txtSenha.Text = "50%Teste";
             // 
             // panel1
             // 
@@ -138,6 +132,48 @@
             this.btnLogin.UseVisualStyleBackColor = true;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
+            // btnSair
+            // 
+            this.btnSair.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnSair.Location = new System.Drawing.Point(450, 212);
+            this.btnSair.Name = "btnSair";
+            this.btnSair.Size = new System.Drawing.Size(121, 39);
+            this.btnSair.TabIndex = 6;
+            this.btnSair.Text = "&Sair";
+            this.btnSair.UseVisualStyleBackColor = true;
+            this.btnSair.Click += new System.EventHandler(this.btnSair_Click);
+            // 
+            // pnlTitulo
+            // 
+            this.pnlTitulo.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.pnlTitulo.Controls.Add(this.lblTitulo);
+            this.pnlTitulo.Location = new System.Drawing.Point(0, 0);
+            this.pnlTitulo.Name = "pnlTitulo";
+            this.pnlTitulo.Size = new System.Drawing.Size(646, 52);
+            this.pnlTitulo.TabIndex = 23;
+            // 
+            // lblTitulo
+            // 
+            this.lblTitulo.AutoSize = true;
+            this.lblTitulo.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitulo.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.lblTitulo.Location = new System.Drawing.Point(13, 12);
+            this.lblTitulo.Name = "lblTitulo";
+            this.lblTitulo.Size = new System.Drawing.Size(257, 25);
+            this.lblTitulo.TabIndex = 0;
+            this.lblTitulo.Text = "Micro Sistema: Autenticação";
+            // 
+            // pcbxIlustraLogin
+            // 
+            this.pcbxIlustraLogin.BackgroundImage = global::MicroSistema.Properties.Resources.Assinatura;
+            this.pcbxIlustraLogin.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pcbxIlustraLogin.Dock = System.Windows.Forms.DockStyle.Left;
+            this.pcbxIlustraLogin.Location = new System.Drawing.Point(0, 0);
+            this.pcbxIlustraLogin.Name = "pcbxIlustraLogin";
+            this.pcbxIlustraLogin.Size = new System.Drawing.Size(204, 263);
+            this.pcbxIlustraLogin.TabIndex = 0;
+            this.pcbxIlustraLogin.TabStop = false;
+            // 
             // btnAjuda
             // 
             this.btnAjuda.BackColor = System.Drawing.SystemColors.ControlLight;
@@ -152,17 +188,6 @@
             this.btnAjuda.UseVisualStyleBackColor = false;
             this.btnAjuda.Click += new System.EventHandler(this.btnAjuda_Click);
             // 
-            // btnSair
-            // 
-            this.btnSair.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnSair.Location = new System.Drawing.Point(450, 212);
-            this.btnSair.Name = "btnSair";
-            this.btnSair.Size = new System.Drawing.Size(121, 39);
-            this.btnSair.TabIndex = 6;
-            this.btnSair.Text = "&Sair";
-            this.btnSair.UseVisualStyleBackColor = true;
-            this.btnSair.Click += new System.EventHandler(this.btnSair_Click);
-            // 
             // frmLogin
             // 
             this.AcceptButton = this.btnLogin;
@@ -171,6 +196,7 @@
             this.CancelButton = this.btnSair;
             this.ClientSize = new System.Drawing.Size(628, 263);
             this.ControlBox = false;
+            this.Controls.Add(this.pnlTitulo);
             this.Controls.Add(this.btnAjuda);
             this.Controls.Add(this.btnSair);
             this.Controls.Add(this.btnLogin);
@@ -180,10 +206,14 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.Name = "frmLogin";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Entrada no Sistema";
-            ((System.ComponentModel.ISupportInitialize)(this.pcbxIlustraLogin)).EndInit();
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmLogin_FormClosing);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.pnlTitulo.ResumeLayout(false);
+            this.pnlTitulo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pcbxIlustraLogin)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -201,5 +231,7 @@
         private System.Windows.Forms.Label lblSenha;
         private System.Windows.Forms.Label lblUsuario;
         private System.Windows.Forms.Button btnSair;
+        private System.Windows.Forms.Panel pnlTitulo;
+        private System.Windows.Forms.Label lblTitulo;
     }
 }

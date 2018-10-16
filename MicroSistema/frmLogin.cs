@@ -55,7 +55,10 @@ namespace MicroSistema
             if (ContaUsuario.UsuarioUtilizador == null)
                 MessageBox.Show("Usuário ou senha inválidos!");
             else
-                MessageBox.Show(String.Format("Entrou! Seja bem vindo, {0}.", ContaUsuario.UsuarioUtilizador.Nome));
+            {
+                this.FormClosing -= new FormClosingEventHandler(this.frmLogin_FormClosing);
+                this.Close();
+            }
         }
 
         private void btnAjuda_Click(object sender, EventArgs e)
@@ -70,7 +73,14 @@ namespace MicroSistema
 
         private void btnSair_Click(object sender, EventArgs e)
         {
+            this.FormClosing -= new FormClosingEventHandler(this.frmLogin_FormClosing);
             Application.Exit();
+        }
+
+        private void frmLogin_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+                e.Cancel = true;
         }
     }
 

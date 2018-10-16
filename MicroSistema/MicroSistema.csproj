@@ -82,6 +82,12 @@
     <Compile Include="frmMensagemSuporte.Designer.cs">
       <DependentUpon>frmMensagemSuporte.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmTrocaSenha.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTrocaSenha.Designer.cs">
+      <DependentUpon>frmTrocaSenha.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmUsuarios.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -125,6 +131,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmMensagemSuporte.resx">
       <DependentUpon>frmMensagemSuporte.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTrocaSenha.resx">
+      <DependentUpon>frmTrocaSenha.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmUsuarios.resx">
       <DependentUpon>frmUsuarios.cs</DependentUpon>

@@ -192,6 +192,7 @@
             this.btnResetSenha.TabIndex = 6;
             this.btnResetSenha.Text = "Reatribuir Senha";
             this.btnResetSenha.UseVisualStyleBackColor = true;
+            this.btnResetSenha.Click += new System.EventHandler(this.btnResetSenha_Click);
             // 
             // panel1
             // 

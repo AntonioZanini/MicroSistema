@@ -116,5 +116,12 @@ namespace MicroSistema
             }
             Close();
         }
+
+        private void btnResetSenha_Click(object sender, EventArgs e)
+        {
+            frmTrocaSenha trocaSenha = new frmTrocaSenha(usuario, false, false);
+            trocaSenha.ShowDialog();
+            usuario = ContaUsuario.BuscarUsuario(usuario.CdUsuario);
+        }
     }
 }

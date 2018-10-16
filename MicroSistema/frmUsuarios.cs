@@ -74,5 +74,13 @@ namespace MicroSistema
             ContaUsuario.Excluir(usuario);
             CarregarDadosGrid();
         }
+
+        private void btnResetSenha_Click(object sender, EventArgs e)
+        {
+            int cdUsuarioSelecionado = Convert.ToInt32(dgvUsuarios.SelectedRows[0].Cells[4].Value.ToString());
+            Usuario usuario = ContaUsuario.BuscarUsuario(cdUsuarioSelecionado);
+            frmTrocaSenha trocaSenha = new frmTrocaSenha(usuario, true, false);
+            trocaSenha.ShowDialog();
+        }
     }
 }

@@ -10,6 +10,7 @@ namespace MicroSistema
 
     public static class ContaUsuario
     {
+        public static bool SenhaTemporaria { get; private set; } = false;
         enum TiposLetras
         {
             Maiusculas,
@@ -21,6 +22,11 @@ namespace MicroSistema
         private static List<string> listaDominios = new List<string>() { "@empresa.com.br" };
 
         public static Usuario UsuarioUtilizador { get; private set; }
+
+        public static bool AutenticarSenha(Usuario usuario, string senha)
+        {
+            return (usuario.Senha.Equals(CriptografarSenha(senha)));
+        }
 
         private static bool ValidarContaUsuario(string conta)
         {
@@ -34,6 +40,11 @@ namespace MicroSistema
                 }
             }
             return estadoRetorno;
+        }
+
+        private static bool VerificarSenhaTemporaria(string senha)
+        {
+            return senha.Contains("Temp@");
         }
 
         private static bool ValidarSenha(string senha)
@@ -110,6 +121,22 @@ namespace MicroSistema
                 throw new ContaInvalidaException("Email do usuário não satisfaz critérios de validação.");
         }
 
+        public static void AlterarSenha(Usuario usuario, string novaSenha)
+        {
+            if (ValidarSenha(novaSenha))
+            {
+                string senhaCripto = CriptografarSenha(novaSenha);
+                using (MicroSistemaContext context = new MicroSistemaContext())
+                {
+                    Usuario usuarioAlterar = context.Usuario.SingleOrDefault(u => u.CdUsuario == usuario.CdUsuario);
+                    usuarioAlterar.AtribuirSenha(senhaCripto);
+                    context.SaveChanges();
+                }
+            }
+            else
+                throw new SenhaInvalidaException("Senha do usuário não satisfaz critérios de validação.");
+        }
+
         public static void NovoUsuario(string email, string nome, string senha, int cdNivelAcesso)
         {
             string senhaCripto;
@@ -159,9 +186,11 @@ namespace MicroSistema
             // Valores de teste: valdirsrios@empresa.com.br e $3nh4I-II-III "10CA25278C7CD10AA375D98EFAD44FBA"
 
             Usuario usuario = null;
-            senha = CriptografarSenha(senha);
-            usuario = context.Usuario.Where(x => x.Email.Equals(conta, StringComparison.InvariantCultureIgnoreCase) && x.Senha.Equals(senha) && x.Ativo == true).FirstOrDefault();
+            string senhaCripto = CriptografarSenha(senha);
+            usuario = context.Usuario.Where(x => x.Email.Equals(conta, StringComparison.InvariantCultureIgnoreCase) && x.Senha.Equals(senhaCripto) && x.Ativo == true).FirstOrDefault();
             UsuarioUtilizador = usuario;
+            if (UsuarioUtilizador != null)
+                SenhaTemporaria = VerificarSenhaTemporaria(senha);
         }
 
     }
@@ -192,6 +221,7 @@ namespace MicroSistema
 
     public partial class Usuario
     {
+        
         public Usuario()
         {
             DataCadastro = DateTime.Today;
@@ -208,5 +238,9 @@ namespace MicroSistema
             CdNivelAcesso = cdNivelAcesso;
         }
 
+        public void AtribuirSenha(string novaSenha)
+        {
+            Senha = novaSenha;
+        }
     }
 }
